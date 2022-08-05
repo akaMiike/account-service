@@ -1,12 +1,11 @@
 package com.hyperskill.accountservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-public class UserDataDTO {
+public class UserDataCreateDTO {
     @NotBlank
     private String name;
 
@@ -17,23 +16,16 @@ public class UserDataDTO {
     @Pattern(regexp = ".*(@acme\\.com)")
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank
     private String password;
 
-    public UserDataDTO(){}
+    public UserDataCreateDTO(){}
 
-    public UserDataDTO(String name, String lastname, String email, String password) {
+    public UserDataCreateDTO(String name, String lastname, String email, String password) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-    }
-
-    public UserDataDTO(String name, String lastname, String email) {
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
     }
 
     public String getName() {
