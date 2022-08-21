@@ -1,9 +1,8 @@
 package com.hyperskill.accountservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class UserDataCreateDTO {
     @NotBlank
@@ -17,6 +16,7 @@ public class UserDataCreateDTO {
     private String email;
 
     @NotBlank
+    //@Size(min = 12, message = "The password length must be at least 12 chars!")
     private String password;
 
     public UserDataCreateDTO(){}

@@ -1,6 +1,7 @@
 package com.hyperskill.accountservice.controller;
 
 import com.hyperskill.accountservice.dto.UserDataReturnDTO;
+import com.hyperskill.accountservice.entity.BreachedPasswords;
 import com.hyperskill.accountservice.entity.User;
 import com.hyperskill.accountservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,17 @@ public class EmplController {
     @GetMapping("/payment")
     public ResponseEntity<UserDataReturnDTO> getDataUser(@AuthenticationPrincipal UserDetails userDetails){
         String userEmail = userDetails.getUsername();
+        String userPassword = userDetails.getPassword();
         Optional<User> existingUser = userService.findByEmail(userEmail);
 
         if(existingUser.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found");
+        }
+        else if(BreachedPasswords.PASSWORDS.contains(userPassword)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The password is in the hacker's database!");
+        }
+        else if(userPassword.length() < 12){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password length must be 12 chars minimum!");
         }
 
         User user = existingUser.get();
